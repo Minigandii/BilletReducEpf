@@ -1,0 +1,68 @@
+{% extends 'baseVisitor.html.twig' %}
+
+{% block title %}Make Payment{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+
+
+    <p class="fs-2 mt-3 text-dark">Je donne un pourboire pour :</p>
+    <p class="fs-4 text-dark">Les ouvreurs du <br> Théâtre de la Ville</p>
+
+    <form class ="text-center" id="payment-form" method="POST">
+
+        <div class="btn-group mb-3" role="group" aria-label="Proposer un montant">
+            <button type="button" class="btn btn-light btn-outline-dark" id="montant-1">1€</button>
+            <button type="button" class="btn btn-light btn-outline-dark" id="montant-2">2€</button>
+            <button type="button" class="btn btn-light btn-outline-dark" id="montant-3">3€</button>
+        </div>
+        <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="addon-wrapping">€</span>
+            <input type="number" id="tip_amount" name="tip_amount" class="form-control border-dark" placeholder="Montant du pourboire" aria-label="Montant du pourboire" aria-describedby="addon-wrapping" step="0.5" min="0" required>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn bleu-soir-50" type="submit" id="pay-cb">Payer par CB</button>
+            <button class="btn bleu-soir-50" type="submit" id="pay-lydia">Payer par Lydia</button>
+        </div>
+    </form>
+
+    <script>
+
+        var formulaire = document.getElementById('payment-form');
+
+        document.getElementById('pay-cb').addEventListener('click', function() {
+            formulaire.action = '/checkout';
+            formulaire.submit();
+        });
+
+        document.getElementById('pay-lydia').addEventListener('click', function() {
+            formulaire.action = '/lydia-payment';
+            formulaire.submit();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#montant-1').click(function() {
+                $('input[type="number"]').val(1);
+            });
+
+            $('#montant-2').click(function() {
+                $('input[type="number"]').val(2);
+            });
+
+            $('#montant-3').click(function() {
+                $('input[type="number"]').val(3);
+            });
+        });
+    </script>
+
+
+
+
+    <div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'baseVisitor.html.twig' %}
+
+{% block title %}Paiement annulé !{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <p class="fs-2 mt-3 text-dark">Votre paiement n'a malheureusement pas abouti !</p>
+    <button type="button" class="btn btn-dark" id="montant-1">Je réessaye</button>  
+    <p class="fs-4 text-dark">Prochainement dans votre théâtre :</p>
+
+
+    <div class ="container text-center" >
+
+        <div class="row">
+
+
+    
+  
+    {% set visitedSessions = [] %}
+
+    {% for item in theaterData %}
+        {% for i in item %}
+            {% if i.eventId not in visitedSessions %}
+                {% set sessionDate = i.sessionDate|date %}
+                {% set formattedDate = sessionDate|date("d/m/y") %}
+                {% set formattedTime = sessionDate|date("H:i") %}
+                <div class="col">
+                    <img src="{{ i.pictureUrl }}" alt="Image de la séance">
+                    <p class ="fs-6"><a href="{{ i.url }}" class="text-dark text-decoration-none">{{ i.eventTitle }} <br> Le {{ formattedDate }} à {{ formattedTime }} </a></p>
+                </div>
+                {% set visitedSessions = visitedSessions|merge([i.eventId]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+  
+
+        </div>
+    </div>
+
+           {{ dump(theatersData) }}
+         {{ dump(theaterData) }}
+    
+{% endblock %}

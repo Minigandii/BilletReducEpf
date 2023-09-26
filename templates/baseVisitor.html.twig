@@ -16,13 +16,28 @@
 
             /* Show it is fixed to the top */
             body {
-                min-height: 75rem;
                 padding-top: 4.5rem;
+                //background-color: #FF4130 !important;   
+                text-align:center;
                 font-family:'OldschoolGrotesk_W', sans-serif;
             }
 
+            .bleu-soir {
+                 background-color: #0209bc;
+                 color: #fff; }
+
+            .bleu-soir-50 {
+                 background-color: #7898ff;
+                 color: #202020; }
+
             .navbar{
                 background-color: #FF4130 !important;
+            }
+
+            .input-group-text{
+                background-color:#292b2c;
+                border:#292b2c;
+                color:white;
             }
 
             .bd-placeholder-img {
@@ -38,6 +53,12 @@
                     font-size: 3.5rem;
                 }
             }
+            @font-face {
+                font-family: 'OldschoolGrotesk_W';
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Regular.woff2') format('woff2');
+                /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
+            }
+            
         </style>
 
 
@@ -45,7 +66,7 @@
     {% endblock %}
 
     {% block javascripts %}
-        <script src="{{ asset('assets/JavaScript.js') }}"></script>
+        {# {{ encore_entry_script_tags('app') }} #}
     {% endblock %}
 </head>
 <body>
@@ -53,13 +74,15 @@
     {% block body %}
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <button onclick="goBack()"> Rt </button>
-                <span class="navbar-text mx-auto">Theatre</span>
-                <button class="rounded-circle btn btn-secondary" type="button">
-                    Qr
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/BR-principal-blanc.png') }}" width="150" alt="Ma Image">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>                   
                 </button>
             </div>
-        </nav>
+        </nav>  
     {% endblock %}
 </main>
 </body>

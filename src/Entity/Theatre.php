@@ -17,6 +17,9 @@ class Theatre extends Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $qrcode = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $StripeAccountId = null;
+
     #[ORM\OneToMany(mappedBy: 'theatre', targetEntity: Ouvreur::class, orphanRemoval: true)]
     private Collection $ouvreurs;
 
@@ -53,6 +56,18 @@ class Theatre extends Utilisateur
     public function setQrcode(string $qrcode): static
     {
         $this->qrcode = $qrcode;
+
+        return $this;
+    }
+
+    public function getStripeAccountId(): ?string
+    {
+        return $this->StripeAccountId;
+    }
+
+    public function setStripeAccountId(string $StripeAccountId): static
+    {
+        $this->StripeAccountId = $StripeAccountId;
 
         return $this;
     }

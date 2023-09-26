@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Theatre;
+use Stripe\Stripe;
+use Stripe\Account;
+use Stripe\AccountLink;
 use App\Entity\Utilisateur;
 use App\Repository\OuvreurRepository;
 use App\Form\TheatreFormType;
@@ -11,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -55,6 +59,16 @@ class TheatreController extends AbstractController
 
         $addTheatreform->handleRequest($request);
         if ($addTheatreform->isSubmitted() && $addTheatreform->isValid()) {
+
+            Stripe::setApiKey($stripeSK);
+
+            $account = Account::create([
+                'type' => 'standard', 
+                'country' => 'FR', 
+                'email' => 'lolacarder@gmail.com', 
+            ]);
+
+            $theatre->setStripeAccountId($account->id);
             $theatre->setRoles(['ROLE_MODERATOR']);
             $theatre->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -72,6 +86,24 @@ class TheatreController extends AbstractController
             'addTheatreform' => $addTheatreform->createView()
         ]);
     }
+
+    #[Route('create-stripe-account-link', name: 'app_create_account_stripe_link')]
+    public function createAccountLink($stripeSK): Response
+    {
+        Stripe::setApiKey($stripeSK);
+
+        $stripeAccountId = $this->getUser()->getStripeAccountId();
+
+        $accountLink = AccountLink::create([
+            'account' => $stripeAccountId,
+            'refresh_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'return_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),            
+            'type' => 'account_onboarding',
+        ]);
+
+        return $this->redirect($accountLink->url);
+    }
+
 
     #[Route('/admin/deleteTheatre/{id}', name: 'app_delete_theatre')]
     public function deleteTheatre($id, EntityManagerInterface $entityManager): Response
