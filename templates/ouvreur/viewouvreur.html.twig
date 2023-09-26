@@ -1,0 +1,32 @@
+{% extends 'baseViewOuvreur.html.twig' %}
+
+{% block title %}Détails de {{ ouvreur.nom }} {{ ouvreur.prenom }}{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+<style>
+    body{
+        background-color: #FF4130 !important;
+    }
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto my-auto">
+            <div class="card bg-secondary text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ ouvreur.nom }}</h5>
+                    <p class="card-text text-center">{{ ouvreur.prenom }}</p>
+                    <p class="card-text text-center">{{ ouvreur.telephone }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/theatre/deleteOuvreur/{{ ouvreur.id }}">Supprimer</a>
+</div>
+
+
+
+{% endblock %}

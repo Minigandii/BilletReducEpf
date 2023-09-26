@@ -1,0 +1,26 @@
+{% extends 'baseTheatre.html.twig' %}
+
+{% block title %}Theatre{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+<style>
+    body{
+        background-color: #FF4130 !important;
+    }
+</style>
+
+<div class="example-wrapper">
+
+    <div class="container">
+        {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
+    </div>
+
+    <a href="{{path('app_add_ouvreur')}}">Ajouter un Ouvreur</a>
+
+    <br>
+    
+    <a href="{{path('app_logout')}}">Se deconnecter</a>
+</div>
+{% endblock %}

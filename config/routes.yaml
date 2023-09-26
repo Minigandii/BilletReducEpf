@@ -1,0 +1,29 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+    methods: ['GET']
+
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\AdminController::dashboard
+    methods: ['GET']
+
+theatre_dashboard:
+    path: /theatre
+    controller: App\Controller\TheatreController::dashboard
+    methods: ['GET']
+
+ouvreur_dashboard:
+    path: /ouvreur
+    controller: App\Controller\OuvreurController::dashboard
+    methods: ['GET']
+
+payment_route:
+    path: /payment
+    controller: App\Controller\MainController::index

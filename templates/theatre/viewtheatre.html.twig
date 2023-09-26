@@ -1,0 +1,22 @@
+{% extends 'baseViewTheatre.html.twig' %}
+
+{% block title %}Détails de {{ theatre.nom }}{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+<style>
+    body{
+        background-color: #FF4130 !important;
+    }
+</style>
+
+<div class="container">
+    <div class="container">
+        {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
+    </div>
+
+    <a href="/admin/deleteTheatre/{{ theatre.id }}">Supprimer</a>
+</div>
+
+{% endblock %}

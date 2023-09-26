@@ -1,0 +1,18 @@
+
+<div class="container">
+    <div class="row">
+        {% for ouvreur in ouvreurs_list %}
+        <div class="col-md-4 mb-3">
+            <a href="/theatre/viewouvreur/{{ ouvreur.id }}" class="card-link">
+                <div class="card bg-secondary text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ ouvreur.nom }}</h5>
+                        <p class="card-text text-center">{{ ouvreur.prenom }}</p>
+                        <p class="card-text text-center">{{ ouvreur.telephone }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>

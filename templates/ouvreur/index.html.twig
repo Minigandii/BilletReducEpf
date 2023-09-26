@@ -1,0 +1,30 @@
+{% extends 'baseOuvreur.html.twig' %}
+
+{% block title %}Hello OuvreurController!{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+<style>
+    body{
+        background-color: #FF4130 !important;
+    }
+</style>
+
+<div class="example-wrapper">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mx-auto my-auto">
+                <div class="card bg-secondary text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"> QR </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{path('app_logout')}}">Se deconnecter</a>
+</div>
+{% endblock %}
