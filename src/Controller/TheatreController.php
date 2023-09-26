@@ -50,7 +50,7 @@ class TheatreController extends AbstractController
     }
 
     #[Route('/admin/addTheatre', name: 'app_add_theatre')]
-    public function addTheatre(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function addTheatre($stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         $theatre = new Theatre();
@@ -96,8 +96,8 @@ class TheatreController extends AbstractController
 
         $accountLink = AccountLink::create([
             'account' => $stripeAccountId,
-            'refresh_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'return_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),            
+            'refresh_url' => $this->generateUrl('app_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'return_url' => $this->generateUrl('app_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),            
             'type' => 'account_onboarding',
         ]);
 
