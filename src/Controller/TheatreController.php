@@ -121,7 +121,7 @@ class TheatreController extends AbstractController
             $entityManager->persist($theatre);
             $entityManager->flush();
 
-            $email = $theatre->getEmail();
+           /* $email = $theatre->getEmail();
 
             Stripe::setApiKey($stripeSK);
 
@@ -132,7 +132,7 @@ class TheatreController extends AbstractController
             ]);
 
             $theatre->setStripeAccountId($account->id);
-            $entityManager->flush();
+            $entityManager->flush();*/
 
             return $this->redirectToRoute('app_admin');
         }
