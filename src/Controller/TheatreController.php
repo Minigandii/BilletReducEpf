@@ -17,6 +17,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpClient\HttpClient;
+
 
 class TheatreController extends AbstractController
 {
@@ -50,25 +52,49 @@ class TheatreController extends AbstractController
     }
 
     #[Route('/admin/addTheatre', name: 'app_add_theatre')]
-    public function addTheatre(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function addTheatre($stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         $theatre = new Theatre();
 
-        $addTheatreform = $this->createForm(TheatreFormType::class, $theatre);
+        $httpClient = HttpClient::create();
+        $responseData = $httpClient->request('POST', 'https://api.billetreduc.com/api/auth/login', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode([
+                'userName' => 'epfprojects@billetreduc.fr', 
+                'password' => 'LtlcHsFhWkOa7aZbDLOU',
+            ]),
+        ]);
+        $tokenData = $responseData->toArray();
+        $token = $tokenData['auth_token']; 
+
+        $responseTheatres = $httpClient->request('GET', 'https://api.billetreduc.com/api/Export/theaters', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+        ]);
+
+        $theatresData = $responseTheatres->toArray();
+
+        $theatreOptions = [];
+        foreach ($theatresData as $th) {
+            foreach ($th as $t){
+                $theatreOptions[$t['id']] = $t['name'] . '*' . $t['address'] . '*' .$t['postalCode'] . '*' .$t['city'].'*'.$t['id']; 
+            }
+        }
+        
+        $addTheatreform = $this->createForm(TheatreFormType::class, $theatre, [
+            'theatres' => ($theatreOptions),
+        ]);
+
+
+       // $addTheatreform = $this->createForm(TheatreFormType::class, $theatre);
 
         $addTheatreform->handleRequest($request);
         if ($addTheatreform->isSubmitted() && $addTheatreform->isValid()) {
 
-            Stripe::setApiKey($stripeSK);
-
-            $account = Account::create([
-                'type' => 'standard', 
-                'country' => 'FR', 
-                'email' => 'lolacarder@gmail.com', 
-            ]);
-
-            $theatre->setStripeAccountId($account->id);
             $theatre->setRoles(['ROLE_MODERATOR']);
             $theatre->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -76,7 +102,36 @@ class TheatreController extends AbstractController
                     $addTheatreform->get('password')->getData()
                 )
             );
+
+
+            $theatreInfo = $addTheatreform->get('BRId')->getData();
+            $theatreChaine = explode('*', $theatreInfo); //chaine divisée en éléments
+
+            $theatreBRId =$theatreChaine[4]; //dernier element : id
+
+            $theatreName = $theatreChaine[0]; //premier element : nom 
+
+            $theatreAddress = $theatreChaine[1].','.$theatreChaine[2].','.$theatreChaine[3];
+            
+            $theatre->setNom($theatreName);
+            $theatre->setAdresse($theatreAddress);
+            $theatre->setBRId($theatreBRId);
+            $theatre->setStripeAccountId('start'); //oblige de mettre un truc pour creer le theatre, et on lui cree son vrai juste apres
+
             $entityManager->persist($theatre);
+            $entityManager->flush();
+
+            $email = $theatre->getEmail();
+
+            Stripe::setApiKey($stripeSK);
+
+            $account = Account::create([
+                'type' => 'standard', 
+                'country' => 'FR', 
+                'email' => $email, 
+            ]);
+
+            $theatre->setStripeAccountId($account->id);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_admin');
@@ -96,8 +151,8 @@ class TheatreController extends AbstractController
 
         $accountLink = AccountLink::create([
             'account' => $stripeAccountId,
-            'refresh_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'return_url' => $this->generateUrl('app_view_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),            
+            'refresh_url' => $this->generateUrl('app_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'return_url' => $this->generateUrl('app_theatre', [], UrlGeneratorInterface::ABSOLUTE_URL),            
             'type' => 'account_onboarding',
         ]);
 

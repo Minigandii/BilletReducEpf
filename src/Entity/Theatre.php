@@ -20,6 +20,9 @@ class Theatre extends Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $StripeAccountId = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $BRId = null;
+
     #[ORM\OneToMany(mappedBy: 'theatre', targetEntity: Ouvreur::class, orphanRemoval: true)]
     private Collection $ouvreurs;
 
@@ -68,6 +71,18 @@ class Theatre extends Utilisateur
     public function setStripeAccountId(string $StripeAccountId): static
     {
         $this->StripeAccountId = $StripeAccountId;
+
+        return $this;
+    }
+
+    public function getBRId(): ?string
+    {
+        return $this->BRId;
+    }
+
+    public function setBRId(string $BRId): static
+    {
+        $this->BRId= $BRId;
 
         return $this;
     }

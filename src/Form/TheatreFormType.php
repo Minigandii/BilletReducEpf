@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Theatre;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +18,9 @@ class TheatreFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+    
+
         $builder
             ->add('email', EmailType::class,['required' => true])
             ->add('password', PasswordType::class, [
@@ -35,16 +40,26 @@ class TheatreFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('nom', TextType::class ,['required' => true])
-            ->add('qrcode', TextType::class ,['required' => true])
-            ->add('adresse', TextType::class ,['required' => true])
-        ;
+            ->add('BRId', ChoiceType::class, [
+                'choices' => (($options['theatres'])),
+                'choice_label' => function ($choice) {
+                    $parts = explode('*', $choice); 
+                    return $parts[0].', '.$parts[1].', '.$parts[2].', '.$parts[3]; //on affiche tout sauf l'id
+                },             
+                'label' => 'Choisissez le théâtre à inscrire',
+                'required' => true,
+            ])
+            ->add('qrcode', TextType::class, ['required' => true]);
+          
+
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Theatre::class,
+            'theatres' => [],
         ]);
     }
+
 }
