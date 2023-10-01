@@ -16,8 +16,11 @@ class OuvreurController extends AbstractController
     #[Route('/ouvreur', name: 'app_ouvreur')]
     public function index(): Response
     {
+
+        $user = $this->getUser();
+
         return $this->render('ouvreur/index.html.twig', [
-            'controller_name' => 'OuvreurController',
+            'ouvreur' => $user
         ]);
     }
 
@@ -52,8 +55,12 @@ class OuvreurController extends AbstractController
     #[Route('/theatre/viewouvreur/{id}', name: 'app_view_ouvreur')]
     public function view(Ouvreur $ouvreur): Response
     {
+
+        $theatre = $ouvreur->getTheatre();
+
         return $this->render('ouvreur/viewouvreur.html.twig', [
-            'ouvreur' => $ouvreur
+            'ouvreur' => $ouvreur,
+            'theatre' => $theatre
         ]);
     }
 

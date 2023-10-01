@@ -32,9 +32,11 @@ class TheatreController extends AbstractController
         } 
 
         $ouvreurs = $ouvreurRepository->findByTheatreId($id);
+        
 
         return $this->render('theatre/index.html.twig', [
             'ouvreurs' => $ouvreurs,
+            'theatre' => $user,
             'controller_name' => 'TheatreController'
         ]);
     }
