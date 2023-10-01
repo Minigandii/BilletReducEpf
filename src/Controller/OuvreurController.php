@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Ouvreur;
 use App\Form\OuvreurFormType;
+use App\Form\EditOuvreurFormType;
+use App\Form\OuvreurEditFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +23,48 @@ class OuvreurController extends AbstractController
 
         return $this->render('ouvreur/index.html.twig', [
             'ouvreur' => $user
+        ]);
+    }
+
+    #[Route('/theatre/editOuvreur/{id}', name: 'app_theatre_edit_ouvreur')]
+    public function theatreEditOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, Ouvreur $ouvreur): Response
+    {
+
+        $editOuvreurForm = $this->createForm(EditOuvreurFormType::class, $ouvreur);
+
+        $editOuvreurForm->handleRequest($request);
+        if ($editOuvreurForm->isSubmitted() && $editOuvreurForm->isValid()) {
+
+            $entityManager->persist($ouvreur);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_theatre');
+        }
+
+        return $this->render('theatre/editOuvreur.html.twig', [
+            'editOuvreurForm' => $editOuvreurForm->createView(),
+            'ouvreur' => $ouvreur,
+        ]);
+    }
+
+    #[Route('/ouvreur/editOuvreur/{id}', name: 'app_edit_ouvreur')]
+    public function editOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, Ouvreur $ouvreur): Response
+    {
+
+        $editOuvreurForm = $this->createForm(OuvreurEditFormType::class, $ouvreur);
+
+        $editOuvreurForm->handleRequest($request);
+        if ($editOuvreurForm->isSubmitted() && $editOuvreurForm->isValid()) {
+
+            $entityManager->persist($ouvreur);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_ouvreur');
+        }
+
+        return $this->render('theatre/editOuvreur.html.twig', [
+            'editOuvreurForm' => $editOuvreurForm->createView(),
+            'ouvreur' => $ouvreur,
         ]);
     }
 
