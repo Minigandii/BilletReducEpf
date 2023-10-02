@@ -124,11 +124,11 @@ class TheatreController extends AbstractController
             $entityManager->persist($theatre);
             $entityManager->flush();
 
-            $theatreId = $theatre->getId();
+            $theatreIdtest = $theatre->getId();
 
             // Vous pouvez maintenant utiliser $theatreId pour générer le QR code ou effectuer d'autres opérations avec cet ID.
 
-            $paymentUrl = $this->generateUrl('app_view_theatre', ['id' => $theatreId], UrlGeneratorInterface::ABSOLUTE_URL);
+            $paymentUrl = $this->generateUrl('app_view_theatre', ['id' => $theatreIdtest], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $qrCodePath = 'BilletReduc/public/QrCode/theatre_qr_code.png';
             $qrCodeGeneratorService->generateQrCode($paymentUrl, $qrCodePath);
