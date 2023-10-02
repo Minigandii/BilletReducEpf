@@ -135,6 +135,30 @@ class TheatreController extends AbstractController
             $entityManager->persist($theatre);
             $entityManager->flush();
 
+            $texte_encode = 'blabla';
+
+            // URL du service de génération de QR Code
+            $url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$texte_encode}";
+
+            // Récupérez l'image du QR Code à partir de l'URL
+            $qrCodeImage = file_get_contents($url);
+
+            if ($qrCodeImage === false) {
+                throw new \Exception('Erreur lors de la récupération de l\'image du QR Code');
+            }
+
+            // Nom du fichier où vous souhaitez enregistrer l'image
+            $filename = 'qr_code.png';
+
+            // Chemin complet du dossier de destination (assurez-vous qu'il existe)
+            $destinationPath = 'C:/Users/Minigandi/Desktop/JE/BilletReducEpf/public/QrCode/';
+
+            // Enregistrez l'image dans le dossier de destination
+            file_put_contents($destinationPath . $filename, $qrCodeImage);
+            
+            $entityManager->persist($theatre);
+            $entityManager->flush();
+
            /* $email = $theatre->getEmail();
 
             Stripe::setApiKey($stripeSK);
