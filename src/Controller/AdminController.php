@@ -18,10 +18,23 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $theatres = $doctrine->getRepository(Theatre::class)->findAll();
+        $entityManager = $doctrine->getManager();
+        $theatres = $entityManager->getRepository(Theatre::class)->findAll();
+
+        // Initialiser un tableau pour stocker les nombres d'entités "ouvreur" pour chaque théâtre
+        $nombreOuvreursParTheatre = [];
+
+        foreach ($theatres as $theatre) {
+            // Utiliser la relation entre Theatre et Ouvreur pour compter les ouvreurs pour ce théâtre
+            $nombreOuvreurs = count($theatre->getOuvreurs());
+            
+            // Stocker le nombre d'ouvreurs dans le tableau associatif avec le nom du théâtre en tant que clé
+            $nombreOuvreursParTheatre[$theatre->getNom()] = $nombreOuvreurs;
+        }
 
         return $this->render('admin/index.html.twig', [
             'theatres' => $theatres,
+            'nombreOuvreursParTheatre' => $nombreOuvreursParTheatre,
             'controller_name' => 'AdminController'
         ]);
     }

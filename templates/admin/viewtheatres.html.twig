@@ -7,7 +7,9 @@
                 <div class="card bg-secondary text-dark">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ theatre.nom }}</h5>
-                        <p class="card-text">Adresse: {{ theatre.adresse }}</p>
+                        <p class="card-text text-center">{{ theatre.adresse }}</p>
+                        <p class="card-text text-center" style="margin-bottom: 1px;">Nombre d'ouvreurs</p> 
+                        <p class="card-text text-center">{{ nombreOuvreursParTheatre[theatre.nom] }}</p>
                     </div>
                 </div>
             </a>
