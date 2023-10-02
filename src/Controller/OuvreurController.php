@@ -27,7 +27,7 @@ class OuvreurController extends AbstractController
     }
 
     #[Route('/theatre/editOuvreur/{id}', name: 'app_theatre_edit_ouvreur')]
-    public function theatreEditOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, Ouvreur $ouvreur): Response
+    public function theatreEditOuvreur(Request $request, EntityManagerInterface $entityManager,  Ouvreur $ouvreur): Response
     {
 
         $editOuvreurForm = $this->createForm(EditOuvreurFormType::class, $ouvreur);
@@ -48,7 +48,7 @@ class OuvreurController extends AbstractController
     }
 
     #[Route('/ouvreur/editOuvreur/{id}', name: 'app_edit_ouvreur')]
-    public function editOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, Ouvreur $ouvreur): Response
+    public function editOuvreur(Request $request, EntityManagerInterface $entityManager, Ouvreur $ouvreur): Response
     {
 
         $editOuvreurForm = $this->createForm(OuvreurEditFormType::class, $ouvreur);
