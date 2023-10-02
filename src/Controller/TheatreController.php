@@ -9,6 +9,7 @@ use Stripe\AccountLink;
 use App\Entity\Utilisateur;
 use App\Repository\OuvreurRepository;
 use App\Form\TheatreFormType;
+use App\Form\EditTheatreFormType; 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
@@ -159,6 +160,48 @@ class TheatreController extends AbstractController
         ]);
 
         return $this->redirect($accountLink->url);
+    }
+
+    #[Route('/theatre/editTheatre/{id}', name: 'app_edit_theatre')]
+    public function EditTheatre(Request $request, EntityManagerInterface $entityManager,  Theatre $theatre): Response
+    {
+
+        $editTheatreForm = $this->createForm(EditTheatreFormType::class, $theatre);
+
+        $editTheatreForm->handleRequest($request);
+        if ($editTheatreForm->isSubmitted() && $editTheatreForm->isValid()) {
+
+            $entityManager->persist($theatre);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_theatre');
+        }
+
+        return $this->render('theatre/editTheatre.html.twig', [
+            'editTheatreForm' => $editTheatreForm->createView(),
+            'theatre' => $theatre,
+        ]);
+    }
+
+    #[Route('/admin/editTheatre/{id}', name: 'app_admin_edit_theatre')]
+    public function AdminEditTheatre(Request $request, EntityManagerInterface $entityManager,  Theatre $theatre): Response
+    {
+
+        $editTheatreForm = $this->createForm(EditTheatreFormType::class, $theatre);
+
+        $editTheatreForm->handleRequest($request);
+        if ($editTheatreForm->isSubmitted() && $editTheatreForm->isValid()) {
+
+            $entityManager->persist($theatre);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('theatre/editTheatre.html.twig', [
+            'editTheatreForm' => $editTheatreForm->createView(),
+            'theatre' => $theatre,
+        ]);
     }
 
 

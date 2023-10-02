@@ -15,7 +15,7 @@
     <div class="container">
         {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
     </div>
-
+    <a href="/admin/editTheatre/{{ theatre.id }}">Modifier</a> <br>
     <a href="/admin/deleteTheatre/{{ theatre.id }}">Supprimer</a>
 </div>
 
