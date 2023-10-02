@@ -16,8 +16,8 @@
 
             /* Show it is fixed to the top */
             body {
-                min-height: 75rem;
                 padding-top: 4.5rem;
+                background-color: #FF4130 !important;
                 font-family:'OldschoolGrotesk_W', sans-serif;
             }
 
@@ -38,6 +38,13 @@
                     font-size: 3.5rem;
                 }
             }
+
+                        @font-face {
+                font-family: 'OldschoolGrotesk_W';
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Regular.woff2') format('woff2');
+                /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
+            }
+            
         </style>
 
 
@@ -53,6 +60,9 @@
     {% block body %}
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/BR-mono-blanc.png') }}" height="50" alt="Monogramme">
+                </a>
                 <button onclick="goBack()"> Rt </button>
                 <span class="navbar-text mx-auto">{{ theatre.nom }}</span>
                 <button class="rounded-circle btn btn-secondary" type="button">

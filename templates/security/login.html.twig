@@ -6,11 +6,6 @@
 
 {{parent()}}
 
-<style>
-    body{
-        background-color: #FF4130 !important;
-    }
-</style>
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

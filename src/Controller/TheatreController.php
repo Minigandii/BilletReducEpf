@@ -86,6 +86,17 @@ class TheatreController extends AbstractController
                 $theatreOptions[$t['id']] = $t['name'] . '*' . $t['address'] . '*' .$t['postalCode'] . '*' .$t['city'].'*'.$t['id']; 
             }
         }
+
+                // Triez le tableau $theatreOptions par ordre alphabétique en utilisant usort
+        usort($theatreOptions, function ($a, $b) {
+            // Séparez les éléments en utilisant l'étoile (*) et comparez les noms (indice 0)
+            $nameA = explode('*', $a)[0];
+            $nameB = explode('*', $b)[0];
+            
+            // Utilisez strcmp pour comparer les noms de manière insensible à la casse
+            return strcmp(strtolower($nameA), strtolower($nameB));
+        });
+
         
         $addTheatreform = $this->createForm(TheatreFormType::class, $theatre, [
             'theatres' => ($theatreOptions),

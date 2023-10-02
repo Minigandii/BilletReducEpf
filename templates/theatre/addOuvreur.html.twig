@@ -1,19 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseTheatre.html.twig' %}
 
 {% block title %}Ajouter Ouvreur{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+
+{{parent()}}
 
 <div class="example-wrapper">
-    <h1>Ajouter Ouvreur</h1>
+    <p class="fs-3 mt-3 text-white">Ajouter un ouvreur :</p>
 
-    {{ form_start(addOuvreurform) }}
-        {{ form_widget(addOuvreurform) }}
-        <button type="submit" class="btn">Valider</button>
+   
+             {{ form_start(addOuvreurform) }}
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.email, {'attr': {'class': 'form-control','placeholder': 'Email'}}) }}
+            {{ form_label(addOuvreurform.email) }}
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.password, {'attr': {'class': 'form-control','placeholder': 'Mot de passe'}}) }}
+            {{ form_label(addOuvreurform.password) }}
+
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.nom, {'attr': {'class': 'form-control','placeholder': 'Nom'}}) }}
+            {{ form_label(addOuvreurform.nom) }}
+
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.prenom, {'attr': {'class': 'form-control','placeholder': 'Prénom'}}) }}
+            {{ form_label(addOuvreurform.prenom) }}
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.telephone, {'attr': {'class': 'form-control','placeholder': 'Telephone'}}) }}
+            {{ form_label(addOuvreurform.telephone) }}
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(addOuvreurform.theatre, {'attr': {'class': 'form-control','placeholder': 'Theatre'}}) }}
+            {{ form_label(addOuvreurform.theatre) }}
+        </div>
+
+        <button type="submit" class="btn btn-dark">Valider</button>
     {{ form_end(addOuvreurform) }}
 
 </div>

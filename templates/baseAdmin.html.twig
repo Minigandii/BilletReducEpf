@@ -16,10 +16,9 @@
 
             /* Show it is fixed to the top */
             body {
-                min-height: 75rem;
-                padding-top: 4.5rem;
+                padding-top: 4.5rem;                 
+                background-color: #FF4130 !important;
                 font-family:'OldschoolGrotesk_W', sans-serif;
-
             }
 
             .navbar{
@@ -39,6 +38,12 @@
                     font-size: 3.5rem;
                 }
             }
+
+            @font-face {
+                font-family: 'OldschoolGrotesk_W';
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Book.woff2') format('woff2');
+                /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
+            }
         </style>
 
 
@@ -52,17 +57,19 @@
 <body>
 <main class="container">
     {% block body %}
+    
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">br'</a>
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/BR-mono-blanc.png') }}" height="50" alt="Monogramme">
+                </a>
                 <span class="navbar-text mx-auto">Compte Administrateur</span>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
                             <a class="nav-link" href="{{path('app_add_admin')}}">Ajouter un Administrateur</a>
                         </li>
                         <li class="nav-item">
