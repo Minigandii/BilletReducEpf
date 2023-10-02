@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttpClient;
+use App\Service\QrCodeGeneratorService;
 
 
 class TheatreController extends AbstractController
@@ -54,7 +55,7 @@ class TheatreController extends AbstractController
     }
 
     #[Route('/admin/addTheatre', name: 'app_add_theatre')]
-    public function addTheatre($stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function addTheatre($stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher,QrCodeGeneratorService $qrCodeGeneratorService): Response
     {
 
         $theatre = new Theatre();
@@ -119,6 +120,20 @@ class TheatreController extends AbstractController
             $theatre->setAdresse($theatreAddress);
             $theatre->setBRId($theatreBRId);
             $theatre->setStripeAccountId('start'); //oblige de mettre un truc pour creer le theatre, et on lui cree son vrai juste apres
+
+            $entityManager->persist($theatre);
+            $entityManager->flush();
+
+            $theatreId = $theatre->getId();
+
+            // Vous pouvez maintenant utiliser $theatreId pour générer le QR code ou effectuer d'autres opérations avec cet ID.
+
+            $paymentUrl = $this->generateUrl('app_view_theatre', ['id' => $theatreId], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $qrCodePath = 'BilletReduc/public/QrCode/theatre_qr_code.png';
+            $qrCodeGeneratorService->generateQrCode($paymentUrl, $qrCodePath);
+
+            $theatre->setQrcode($qrCodePath);
 
             $entityManager->persist($theatre);
             $entityManager->flush();
