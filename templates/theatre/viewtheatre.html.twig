@@ -11,7 +11,7 @@
         {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
     </div>
     <a href="/admin/editTheatre/{{ theatre.id }}">Modifier</a> <br>
-    <a href="/admin/deleteTheatre/{{ theatre.id }}">Supprimer</a>
+    <a href="{{ path('app_confirm_delete_theatre', {'id': theatre.id}) }}" class="btn btn-danger">Supprimer</a>
 </div>
 
 {% endblock %}

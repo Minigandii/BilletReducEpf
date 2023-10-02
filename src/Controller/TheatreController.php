@@ -233,4 +233,21 @@ class TheatreController extends AbstractController
         return $this->redirectToRoute('app_admin');
     }
 
+
+    #[Route("/admin/confirm_delete_theatre/{id}", name: 'app_confirm_delete_theatre')]
+
+    public function confirmDeleteTheatre($id, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $theatreRepository = $entityManager->getRepository(Theatre::class);
+        $theatreToDelete = $theatreRepository->find($id);
+
+        if (!$theatreToDelete) {
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('admin/confirm_delete_theatre.html.twig', [
+            'theatre' => $theatreToDelete,
+        ]);
+    }
+
 }
