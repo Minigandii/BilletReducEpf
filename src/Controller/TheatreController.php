@@ -19,7 +19,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttpClient;
-
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class TheatreController extends AbstractController
 {
@@ -55,7 +56,7 @@ class TheatreController extends AbstractController
     }
 
     #[Route('/admin/addTheatre', name: 'app_add_theatre')]
-    public function addTheatre($stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function addTheatre(KernelInterface $kernel,RouterInterface $router,$stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         $theatre = new Theatre();
@@ -135,10 +136,12 @@ class TheatreController extends AbstractController
             $entityManager->persist($theatre);
             $entityManager->flush();
 
-            $texte_encode = 'blabla';
+            $theatreId = $theatre->getId();
+
+            $url = $router->generate('app_view_theatre', ['id' => $theatreId], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // URL du service de génération de QR Code
-            $url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$texte_encode}";
+            $url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=". urlencode($url);
 
             // Récupérez l'image du QR Code à partir de l'URL
             $qrCodeImage = file_get_contents($url);
@@ -147,30 +150,27 @@ class TheatreController extends AbstractController
                 throw new \Exception('Erreur lors de la récupération de l\'image du QR Code');
             }
 
-            // Nom du fichier où vous souhaitez enregistrer l'image
-            $filename = 'qr_code.png';
+            $theatreName = $theatre->getNom(); // Assurez-vous d'ajuster cette ligne en fonction de votre entité Theatre
 
-            // Chemin complet du dossier de destination (assurez-vous qu'il existe)
-            $destinationPath = 'C:/Users/Minigandi/Desktop/JE/BilletReducEpf/public/QrCode/';
+            // Remplacez les caractères spéciaux et espaces par des tirets (ou utilisez une autre logique de nettoyage si nécessaire)
+            $cleanedTheatreName = preg_replace('/[^a-zA-Z0-9]+/', '-', $theatreName);
+
+            // Créez le nom du fichier en ajoutant l'extension '.png'
+            $filename = $cleanedTheatreName . '.png';
+
+            // Obtenez le chemin du répertoire racine de votre projet
+            $projectDir = $kernel->getProjectDir();
+
+            // Définissez le chemin relatif vers le répertoire QrCode
+            $destinationPath = $projectDir . '/public/QrCode/';
 
             // Enregistrez l'image dans le dossier de destination
             file_put_contents($destinationPath . $filename, $qrCodeImage);
+
+            $theatre->setQrcode($destinationPath);
             
             $entityManager->persist($theatre);
             $entityManager->flush();
-
-           /* $email = $theatre->getEmail();
-
-            Stripe::setApiKey($stripeSK);
-
-            $account = Account::create([
-                'type' => 'standard', 
-                'country' => 'FR', 
-                'email' => $email, 
-            ]);
-
-            $theatre->setStripeAccountId($account->id);
-            $entityManager->flush();*/
 
             return $this->redirectToRoute('app_admin');
         }
