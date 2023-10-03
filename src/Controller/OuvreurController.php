@@ -33,10 +33,12 @@ class OuvreurController extends AbstractController
         $editOuvreurForm = $this->createForm(EditOuvreurFormType::class, $ouvreur);
 
         $editOuvreurForm->handleRequest($request);
+        $theatre = $ouvreur->getTheatre();
         if ($editOuvreurForm->isSubmitted() && $editOuvreurForm->isValid()) {
 
             $entityManager->persist($ouvreur);
             $entityManager->flush();
+            
 
             return $this->redirectToRoute('app_theatre');
         }
@@ -44,6 +46,7 @@ class OuvreurController extends AbstractController
         return $this->render('theatre/editOuvreur.html.twig', [
             'editOuvreurForm' => $editOuvreurForm->createView(),
             'ouvreur' => $ouvreur,
+            'theatre'=> $theatre
         ]);
     }
 
@@ -54,6 +57,7 @@ class OuvreurController extends AbstractController
         $editOuvreurForm = $this->createForm(OuvreurEditFormType::class, $ouvreur);
 
         $editOuvreurForm->handleRequest($request);
+        $theatre = $ouvreur->getTheatre();
         if ($editOuvreurForm->isSubmitted() && $editOuvreurForm->isValid()) {
 
             $entityManager->persist($ouvreur);
@@ -65,11 +69,12 @@ class OuvreurController extends AbstractController
         return $this->render('theatre/editOuvreur.html.twig', [
             'editOuvreurForm' => $editOuvreurForm->createView(),
             'ouvreur' => $ouvreur,
+            'theatre'=> $theatre
         ]);
     }
 
     #[Route('/theatre/addOuvreur', name: 'app_add_ouvreur')]
-    public function addOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function addOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher ): Response
     {
 
         $ouvreur = new Ouvreur();
@@ -92,7 +97,8 @@ class OuvreurController extends AbstractController
         }
 
         return $this->render('theatre/addOuvreur.html.twig', [
-            'addOuvreurform' => $addOuvreurform->createView()
+            'addOuvreurform' => $addOuvreurform->createView(),
+           
         ]);
     }
 

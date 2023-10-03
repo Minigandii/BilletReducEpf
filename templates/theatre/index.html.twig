@@ -13,18 +13,6 @@
         {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
     </div>
 
-    <a href="{{path('app_add_ouvreur')}}">Ajouter un Ouvreur</a>
-
-    <br>
-
-    <a href="/theatre/editTheatre/{{ theatre.id }}">Modifier Theatre</a>
-
-    <br>
-    
-    <a href="{{path('app_logout')}}">Se deconnecter</a>
-
-    <br>
-
-    <a href="{{path('app_create_account_stripe_link')}}">Verifier mon compte Stripe</a>
+   
 </div>
 {% endblock %}

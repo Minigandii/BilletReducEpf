@@ -2,19 +2,20 @@
 <div class="container">
     <div class="row">
         {% for theatre in theatres_list %}
-        <div class="col-md-4 mb-3">
-            <a href="/theatre/viewtheatre/{{ theatre.id }}" class="card-link">
-                <div class="card bg-secondary text-dark">
+        <div class="col-md-4 mt-3 mb-3">
+            <a href="/theatre/viewtheatre/{{ theatre.id }}" class="card-link text-decoration-none">
+                <div class="card bg-light text-dark">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ theatre.nom }}</h5>
                         <p class="card-text text-center">{{ theatre.adresse }}</p>
-                        <p class="card-text text-center" style="margin-bottom: 1px;">Nombre d'ouvreurs</p> 
-                        <p class="card-text text-center">{{ nombreOuvreursParTheatre[theatre.nom] }}</p>
-                    </div>
+                        <p class="card-text text-center" style="margin-bottom: 1px;">Nombre d'ouvreurs : {{ nombreOuvreursParTheatre[theatre.nom] }} </p> 
+                    </div>                  
                 </div>
             </a>
         </div>
+        
         {% endfor %}
+      
     </div>
 </div>
 

@@ -44,7 +44,7 @@ class TheatreFormType extends AbstractType
                 'choices' => (($options['theatres'])),
                 'choice_label' => function ($choice) {
                     $parts = explode('*', $choice); 
-                    return $parts[0].', '.$parts[1].', '.$parts[2].', '.$parts[3]; //on affiche tout sauf l'id
+                    return $parts[0].', '.$parts[2].', '.$parts[3];
                 },             
                 'label' => 'Choisissez le théâtre à inscrire',
                 'required' => true,

@@ -45,7 +45,6 @@ class TheatreController extends AbstractController
     #[Route('/theatre/viewtheatre/{id}', name: 'app_view_theatre')]
     public function view(Theatre $theatre, $id, OuvreurRepository $ouvreurRepository): Response
     {
-
         $ouvreurs = $ouvreurRepository->findByTheatreId($id);
 
         return $this->render('theatre/viewtheatre.html.twig', [
@@ -125,7 +124,7 @@ class TheatreController extends AbstractController
 
             $theatreName = $theatreChaine[0]; //premier element : nom 
 
-            $theatreAddress = $theatreChaine[1].','.$theatreChaine[2].','.$theatreChaine[3];
+            $theatreAddress = $theatreChaine[1].', '.$theatreChaine[2].', '.$theatreChaine[3];
             
             $theatre->setNom($theatreName);
             $theatre->setAdresse($theatreAddress);

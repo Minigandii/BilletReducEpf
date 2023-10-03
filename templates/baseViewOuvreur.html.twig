@@ -11,19 +11,34 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-...">
+
 
         <style>
 
             /* Show it is fixed to the top */
             body {
+                text-align:center;
                 padding-top: 4.5rem;
                 background-color: #FF4130 !important;
-                font-family:'OldschoolGrotesk_W', sans-serif;
+                font-family:'OldschoolGrotesk_W', sans-serif;*
+                
             }
 
             .navbar{
                 background-color: #FF4130 !important;
             }
+
+
+        .custom-card-width {
+            width: 100%; /* Largeur par défaut (pour les petits écrans) */
+        }
+
+        @media (min-width: 992px) {
+            .custom-card-width {
+                width: 60%; /* Largeur personnalisée pour les grands écrans */
+            }
+        }
 
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -38,9 +53,10 @@
                     font-size: 3.5rem;
                 }
             }
+
                         @font-face {
                 font-family: 'OldschoolGrotesk_W';
-                src: url('/font/WOFF2/OldschoolGrotesk_W-Regular.woff2') format('woff2');
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Book.woff2') format('woff2');
                 /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
             }
             
@@ -59,14 +75,15 @@
     {% block body %}
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="{{ asset('images/BR-mono-blanc.png') }}" height="50" alt="Monogramme">
-                </a>           
-                <button onclick="goBack()"> Rt </button>
-                <span class="navbar-text mx-auto">{{ theatre.nom }}</span>
-                <button class="rounded-circle btn btn-secondary" type="button">
-                    Qr
-                </button>
+            <button onclick="goBack()" class="btn btn-link">
+                <i class="fas fa-circle-arrow-left text-white fa-2x"></i>
+            </button>
+            <span class="navbar-text mx-auto">{{ ouvreur.prenom ~ ' ' ~ ouvreur.nom }}</span>
+
+            <button class="btn btn-link">
+                <i class="fas fa-qrcode text-white fa-2x"></i>
+            </button>
+
             </div>
         </nav>
     {% endblock %}
