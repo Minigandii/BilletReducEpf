@@ -1,6 +1,7 @@
 
-
+<div class="row">
         {% for ouvreur in ouvreurs_list %}
+        
         <div class="col-md-4 mt-3 mb-5">
             <a href="/theatre/viewouvreur/{{ ouvreur.id }}" class="card-link text-decoration-none">
                 <div class="card bg-light text-dark">
@@ -12,4 +13,6 @@
                 </div>
             </a>
         </div>
+        
         {% endfor %}
+        </div>

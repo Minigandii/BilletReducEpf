@@ -1,4 +1,4 @@
-{% extends 'baseAdmin.html.twig' %}
+{% extends 'baseViewOuvreur.html.twig' %}
 
 {% block title %}Confirmation de suppression{% endblock %}
 
@@ -11,11 +11,11 @@
 
 <div class="example-wrapper">
     <div class="container">
-        <h2>Confirmation de suppression</h2>
-        <p>Voulez-vous vraiment supprimer ce théâtre ?</p>
+    <p class="fs-3 mt-3 text-white">Confirmation de suppression :</p>
+        <p class="text-white">Voulez-vous vraiment supprimer cet ouvreur ?</p>
         <form method="post" action="{{ path('app_delete_ouvreur', {'id': ouvreur.id}) }}">
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-            <a href="{{ path('app_theatre') }}" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="btn bg-dark btn-danger">Supprimer</button>
+            <a onclick="goBack()" class="btn btn-secondary">Annuler</a>
         </form>
     </div>
 </div>
