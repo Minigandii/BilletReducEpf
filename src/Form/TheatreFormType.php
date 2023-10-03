@@ -18,9 +18,6 @@ class TheatreFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-    
-
         $builder
             ->add('email', EmailType::class,['required' => true])
             ->add('password', PasswordType::class, [
@@ -48,10 +45,7 @@ class TheatreFormType extends AbstractType
                 },             
                 'label' => 'Choisissez le théâtre à inscrire',
                 'required' => true,
-            ])
-            ->add('qrcode', TextType::class, ['required' => true]);
-          
-
+            ]);
     }
 
 

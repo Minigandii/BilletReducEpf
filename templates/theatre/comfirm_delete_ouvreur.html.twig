@@ -1,0 +1,22 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Confirmation de suppression{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/JavaScript.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="example-wrapper">
+    <div class="container">
+        <h2>Confirmation de suppression</h2>
+        <p>Voulez-vous vraiment supprimer ce théâtre ?</p>
+        <form method="post" action="{{ path('app_delete_ouvreur', {'id': ouvreur.id}) }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+            <a href="{{ path('app_theatre') }}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

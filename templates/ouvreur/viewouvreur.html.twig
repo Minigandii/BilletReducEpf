@@ -25,7 +25,7 @@
            <a href="/theatre/editOuvreur/{{ ouvreur.id }}" class="text-white text-center d-block mx-2">
                 <i class="fas fa-square-pen fa-2x"></i>
             </a>
-             <a href="/theatre/deleteOuvreur/{{ ouvreur.id }}" class="text-white text-center d-block mx-2">
+             <a href="{{ path('app_confirm_delete_ouvreur', {'id': ouvreur.id}) }}" class="btn btn-danger" class="text-white text-center d-block mx-2">
                 <i class="fas fa-trash fa-2x"></i>
             </a>
 

@@ -130,4 +130,20 @@ class OuvreurController extends AbstractController
         // Rediriger vers une page, peut-être la liste des théâtres
         return $this->redirectToRoute('app_theatre');
     }
+
+    #[Route("/theatre/confirm_delete_ouvreur/{id}", name: 'app_confirm_delete_ouvreur')]
+
+    public function confirmDeleteOuvreur($id, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
+        $ouvreurToDelete = $ouvreurRepository->find($id);
+
+        if (!$ouvreurToDelete) {
+            return $this->redirectToRoute('app_theatre');
+        }
+
+        return $this->render('/theatre/comfirm_delete_ouvreur.html.twig', [
+            'ouvreur' => $ouvreurToDelete,
+        ]);
+    }
 }
