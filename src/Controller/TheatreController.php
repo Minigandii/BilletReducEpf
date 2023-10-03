@@ -131,6 +131,7 @@ class TheatreController extends AbstractController
             $theatre->setNom($theatreName);
             $theatre->setAdresse($theatreAddress);
             $theatre->setBRId($theatreBRId);
+            $theatre->setQrcode("");
             $theatre->setStripeAccountId('start'); //oblige de mettre un truc pour creer le theatre, et on lui cree son vrai juste apres
 
             $entityManager->persist($theatre);

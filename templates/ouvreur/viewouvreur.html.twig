@@ -19,7 +19,7 @@
         </div>
     </div>
     <a href="/theatre/editOuvreur/{{ ouvreur.id }}">Modifier</a> <br>
-    <a href="/theatre/deleteOuvreur/{{ ouvreur.id }}">Supprimer</a>
+    <a href="{{ path('app_confirm_delete_ouvreur', {'id': ouvreur.id}) }}" class="btn btn-danger">Supprimer</a>
 </div>
 
 
