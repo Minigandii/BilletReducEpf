@@ -8,6 +8,7 @@ use App\Form\OuvreurFormType;
 use App\Form\EditOuvreurFormType;
 use App\Form\OuvreurEditFormType;
 use App\Repository\OuvreurRepository;
+use App\Repository\TheatreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,7 +89,7 @@ class OuvreurController extends AbstractController
     }
 
     #[Route('/theatre/addOuvreur', name: 'app_add_ouvreur')]
-    public function addOuvreur(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher ): Response
+    public function addOuvreur(TheatreRepository $theatreRepository, OuvreurRepository $ouvreurRepository,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher ): Response
     {
 
         $ouvreur = new Ouvreur();
@@ -104,6 +105,17 @@ class OuvreurController extends AbstractController
                     $addOuvreurform->get('password')->getData()
                 )
             );
+
+            $user = $this->getUser();
+
+            if ($user instanceof Utilisateur) {
+                $id = $user->getId();
+                $theatre = $theatreRepository->getTheatreById($id);
+            } 
+            else{
+            }
+
+            $ouvreur->setTheatre($theatre);
             $entityManager->persist($ouvreur);
             $entityManager->flush();
 
