@@ -56,6 +56,17 @@ class TheatreController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/viewtheatreadmin/{id}', name: 'app_view_theatre_admin')]
+    public function viewadmintheatre(Theatre $theatre, $id, OuvreurRepository $ouvreurRepository): Response
+    {
+        $ouvreurs = $ouvreurRepository->findByTheatreId($id);
+
+        return $this->render('admin/viewtheatreadmin.html.twig', [
+            'theatre' => $theatre,
+            'ouvreurs' => $ouvreurs
+        ]);
+    }
+
     #[Route('/admin/addTheatre', name: 'app_add_theatre')]
     public function addTheatre(KernelInterface $kernel,RouterInterface $router,$stripeSK,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -294,6 +305,17 @@ class TheatreController extends AbstractController
             $id = $user->getId();
             $theatre = $theatreRepository->getTheatreById($id);
         } 
+
+        return $this->render('theatre/viewQr.html.twig', [
+            'theatre' => $theatre,
+        ]);
+    }
+
+    #[Route('/admin/viewQr/{id}', name: 'app_admin_view_qr')]
+    public function viewQrAdmin(TheatreRepository $theatreRepository, $id): Response
+    {
+
+        $theatre = $theatreRepository->getTheatreById($id);
 
         return $this->render('theatre/viewQr.html.twig', [
             'theatre' => $theatre,

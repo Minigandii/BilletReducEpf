@@ -1,0 +1,31 @@
+{% extends 'baseViewTheatreAdmin.html.twig' %}
+
+{% block title %}Détails de {{ theatre.nom }}{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+
+<div class="container">
+
+    <div class="row">
+        {{ include('theatre/viewouvreurs.html.twig', {ouvreurs_list: ouvreurs}) }}
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-evenly">
+
+        
+            <a href="/admin/editTheatre/{{ theatre.id }}" class="text-white text-center d-block">
+                <i class="fas fa-square-pen fa-3x"></i>
+            </a>
+
+            <a href="{{ path('app_confirm_delete_theatre', {'id': theatre.id}) }}" class="text-white text-center d-block">
+                <i class="fas fa-trash fa-3x"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
