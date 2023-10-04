@@ -49,6 +49,11 @@ class OuvreurRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getOuvreurById(int $id): ?Ouvreur
+    {
+        return $this->find($id);
+    }
+
 //    /**
 //     * @return Ouvreur[] Returns an array of Ouvreur objects
 //     */

@@ -9,7 +9,8 @@ use Stripe\AccountLink;
 use App\Entity\Utilisateur;
 use App\Repository\OuvreurRepository;
 use App\Form\TheatreFormType;
-use App\Form\EditTheatreFormType; 
+use App\Form\EditTheatreFormType;
+use App\Repository\TheatreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,12 +26,13 @@ use Symfony\Component\Routing\RouterInterface;
 class TheatreController extends AbstractController
 {
     #[Route('/theatre', name: 'app_theatre')]
-    public function index(OuvreurRepository $ouvreurRepository): Response
+    public function index(OuvreurRepository $ouvreurRepository, TheatreRepository $theatreRepository): Response
     {
         $user = $this->getUser();
 
         if ($user instanceof Utilisateur) {
             $id = $user->getId();
+            $theatre = $theatreRepository->getTheatreById($id);
         } 
 
         $ouvreurs = $ouvreurRepository->findByTheatreId($id);
@@ -38,7 +40,7 @@ class TheatreController extends AbstractController
 
         return $this->render('theatre/index.html.twig', [
             'ouvreurs' => $ouvreurs,
-            'theatre' => $user,
+            'theatre' => $theatre,
             'controller_name' => 'TheatreController'
         ]);
     }
@@ -167,7 +169,7 @@ class TheatreController extends AbstractController
             // Enregistrez l'image dans le dossier de destination
             file_put_contents($destinationPath . $filename, $qrCodeImage);
 
-            $theatre->setQrcode($destinationPath);
+            $theatre->setQrcode($filename);
             
             $entityManager->persist($theatre);
             $entityManager->flush();
@@ -271,6 +273,21 @@ class TheatreController extends AbstractController
 
         return $this->render('admin/confirm_delete_theatre.html.twig', [
             'theatre' => $theatreToDelete,
+        ]);
+    }
+
+    #[Route('/theatre/viewQr', name: 'app_theatre_view_qr')]
+    public function viewQr(TheatreRepository $theatreRepository): Response
+    {
+        $user = $this->getUser();
+
+        if ($user instanceof Utilisateur) {
+            $id = $user->getId();
+            $theatre = $theatreRepository->getTheatreById($id);
+        } 
+
+        return $this->render('theatre/viewQr.html.twig', [
+            'theatre' => $theatre,
         ]);
     }
 

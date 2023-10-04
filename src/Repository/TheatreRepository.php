@@ -39,6 +39,11 @@ class TheatreRepository extends ServiceEntityRepository
         }
     }
 
+    public function getTheatreById(int $id): ?Theatre
+    {
+        return $this->find($id);
+    }
+
 //    /**
 //     * @return Theatre[] Returns an array of Theatre objects
 //     */

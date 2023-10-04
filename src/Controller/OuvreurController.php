@@ -3,26 +3,40 @@
 namespace App\Controller;
 
 use App\Entity\Ouvreur;
+use App\Entity\Utilisateur;
 use App\Form\OuvreurFormType;
 use App\Form\EditOuvreurFormType;
 use App\Form\OuvreurEditFormType;
+use App\Repository\OuvreurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class OuvreurController extends AbstractController
 {
     #[Route('/ouvreur', name: 'app_ouvreur')]
-    public function index(): Response
+    public function index(OuvreurRepository $ouvreurRepository): Response
     {
 
         $user = $this->getUser();
 
+        if ($user instanceof Utilisateur) {
+            $id = $user->getId();
+            $ouvreur = $ouvreurRepository->getOuvreurById($id);
+            $theatre = $ouvreur->getTheatre();
+        } 
+        else{
+
+        }
+        
         return $this->render('ouvreur/index.html.twig', [
-            'ouvreur' => $user
+            'ouvreur' => $ouvreur,
+            'theatre' => $theatre,
+
         ]);
     }
 
@@ -144,6 +158,19 @@ class OuvreurController extends AbstractController
 
         return $this->render('/theatre/comfirm_delete_ouvreur.html.twig', [
             'ouvreur' => $ouvreurToDelete,
+        ]);
+    }
+
+    #[Route('/ouvreur/viewQr', name: 'app_ouvreur_view_qr')]
+    public function viewQr(Ouvreur $ouvreur): Response
+    {
+
+        $theatre = $ouvreur->getTheatre();
+        $qrpath = $theatre->getQrcode();
+        
+        return $this->render('ouvreur/qrcodeOuvreur.html.twig', [
+            'qrpath' => $qrpath,
+            'ouvreur' => $ouvreur,
         ]);
     }
 }

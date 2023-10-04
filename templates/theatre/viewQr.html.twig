@@ -1,0 +1,21 @@
+{% extends 'baseViewOuvreur.html.twig' %}
+
+{% block title %}Qr Code{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+
+<div class="container">
+    <div class="row">
+       <div class="col mt-3 mb-3 d-flex">
+            <div class="card bg-light text-dark mx-auto custom-card-width">
+                    <div class="card-body"> 
+                        <img src="{{ asset('QrCode/' ~ theatre.qrcode) }}" alt="QR Code" />
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
