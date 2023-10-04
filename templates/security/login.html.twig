@@ -6,50 +6,59 @@
 
 {{parent()}}
 
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-12">
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+
+                    <p class="fs-3 mt-3 text-white">Connexion</p>
+
+
+
+                    <div class="input-group flex-nowrap mb-3">
+                        <span class="input-group-text fas fa-user border-dark text-white bg-dark" id="addon-wrapping"></span>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control border-dark" placeholder="Adresse e-mail" autocomplete="email" required autofocus>
+                    </div>
+                    <div class="input-group flex-nowrap mb-3">
+                        <span class="input-group-text fas fa-lock border-dark text-white bg-dark" id="addon-wrapping"></span>
+                        <input type="password" name="password" id="inputPassword" class="form-control border-dark" placeholder="Mot de passe" autocomplete="current-password" required>
+                    </div>
+
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+                #}
+
+                <div class="text-center mt-3">
+                    <button class="btn btn-lg btn-primary btn-dark" type="submit">
+                        Se connecter
+                    </button>
+                </div>
+            </form>
         </div>
-    {% endif %}
-
-
-        <p class="fs-3 mt-3 text-white">Connexion</p>
-
-
-
-        <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text fas fa-user border-dark text-white bg-dark" id="addon-wrapping"></span>
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control border-dark" placeholder="Adresse e-mail" autocomplete="email" required autofocus>
-        </div>
-        <div class="input-group flex-nowrap mb-3">
-            <span class="input-group-text fas fa-lock border-dark text-white bg-dark" id="addon-wrapping"></span>
-            <input type="password" name="password" id="inputPassword" class="form-control border-dark" placeholder="Mot de passe" autocomplete="current-password" required>
-        </div>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <div class="text-center mt-3">
-        <button class="btn btn-lg btn-primary btn-dark" type="submit">
-            Se connecter
-        </button>
     </div>
-</form>
+</div>
+
+
 {% endblock %}

@@ -138,9 +138,18 @@ class TheatreController extends AbstractController
             $entityManager->persist($theatre);
             $entityManager->flush();
 
+            $email = $theatre->getEmail();
+            Stripe::setApiKey($stripeSK);
+            $account = Account::create([
+                'type' => 'standard', 
+                'country' => 'FR', 
+                'email' => $email, 
+            ]);
+            $theatre->setStripeAccountId($account->id);
+
             $theatreId = $theatre->getId();
 
-            $url = $router->generate('app_view_theatre', ['id' => $theatreId], UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $router->generate('payment', ['id' => $theatreId], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // URL du service de génération de QR Code
             $url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=". urlencode($url);
