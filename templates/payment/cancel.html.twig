@@ -7,7 +7,7 @@
     {{ parent() }}
 
     <p class="fs-2 mt-3 text-dark">Votre paiement n'a malheureusement pas abouti !</p>
-    <button type="button" class="btn btn-dark" id="montant-1">Je réessaye</button>  
+        <a href="{{ path('payment', {'id': theatreId }) }}" class="btn btn bleu-soir-50 mb-4">Je réessaye</a>
     <p class="fs-4 text-dark">Prochainement dans votre théâtre :</p>
 
 
@@ -40,7 +40,6 @@
         </div>
     </div>
 
-           {{ dump(theatersData) }}
-         {{ dump(theaterData) }}
+
     
 {% endblock %}

@@ -6,7 +6,7 @@
 
     {{ parent() }}
 
-    <p class="fs-2 mt-3 text-dark">Le Théâtre de la Ville vous remercie pour son pourboire !</p>
+    <p class="fs-2 mt-3 text-dark">{{theatreNom}} vous remercie pour son pourboire !</p>
     <p class="fs-4 text-dark">Prochainement dans votre théâtre :</p>
 
 
@@ -39,7 +39,6 @@
         </div>
     </div>
 
-           {{ dump(theatersData) }}
-         {{ dump(theaterData) }}
+     
     
 {% endblock %}
