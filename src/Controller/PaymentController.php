@@ -13,6 +13,8 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Extensions\MyLydiaFacade;
 use Pythagus\Lydia\Http\PaymentRequest;
+use Doctrine\ORM\EntityManagerInterface; 
+use App\Repository\TheatreRepository;
 
 
 use Pythagus\Lydia\Lydia;
@@ -20,11 +22,16 @@ use Pythagus\Lydia\Lydia;
 class PaymentController extends AbstractController
 {
 
-    #[Route('/payment', name: 'payment')]
-    public function index(): Response
+    #[Route('/payment/{id}', name: 'payment')]
+    public function index($id,TheatreRepository $theatreRepository): Response
     {
+
+        $theatre = $theatreRepository->findById($id);
+        $theatreNom=$theatre->getNom();
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController',
+            'id'=>$id,
+            'theatreNom'=>$theatreNom
         ]);
     }
 
@@ -87,9 +94,18 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/checkout', name: 'checkout')]
-    public function checkout($stripeSK, Request $request): Response
+    public function checkout($stripeSK, Request $request,TheatreRepository $theatreRepository): Response
     {
         Stripe::setApiKey($stripeSK);
+
+        $id=$request->request->get('id');
+        $theatre = $theatreRepository->findById($id);
+
+        if (!$theatre){}
+        else{
+        
+        $theatreBRId = $theatre->getBRId();
+        $theatreStripe = $theatre->getStripeAccountId();
 
         $tipAmount = (float)$request->request->get('tip_amount', 0.0);
         $session = Session::create([
@@ -108,11 +124,11 @@ class PaymentController extends AbstractController
             ],
             'mode'                 => 'payment',
             'payment_intent_data' => ['application_fee_amount' => 0],
-            'success_url'          => $this->generateUrl('success_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url'           => $this->generateUrl('cancel_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'success_url'          => $this->generateUrl('success_url', ['id' => $theatreBRId], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url'           => $this->generateUrl('cancel_url', ['id' => $theatreBRId], UrlGeneratorInterface::ABSOLUTE_URL),
         ],
-        ['stripe_account' => 'acct_1NtGNBPje2U6C11l']
-    );
+        ['stripe_account' => $theatreStripe]
+    );}
 
         return $this->redirect($session->url, 303);
     }
@@ -121,9 +137,13 @@ class PaymentController extends AbstractController
     
 
 
-    #[Route('/success', name: 'success_url')]
-    public function successUrl(): Response
+    #[Route('/success/{id}', name: 'success_url')]
+    public function successUrl($id,TheatreRepository $theatreRepository): Response
     {
+
+        $theatre=$theatreRepository->findByBRId($id);
+        $theatreNom=$theatre->getNom();
+
         $httpClient = HttpClient::create();
         $responseData = $httpClient->request('POST', 'https://api.billetreduc.com/api/auth/login', [
             'headers' => [
@@ -144,7 +164,7 @@ class PaymentController extends AbstractController
         ]);
       
 
-        $responseTheatre = $httpClient->request('GET', 'https://api.billetreduc.com/api/export/GetNextSessionFromTheater/122', [
+        $responseTheatre = $httpClient->request('GET', 'https://api.billetreduc.com/api/export/GetNextSessionFromTheater/' . $id, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
             ],
@@ -158,13 +178,18 @@ class PaymentController extends AbstractController
  
  
     
-        return $this->render('payment/success.html.twig', ['theatersData' => $theatersData,'theaterData' => $theaterData]);
+        return $this->render('payment/success.html.twig', ['theatreNom'=> $theatreNom,'theatersData' => $theatersData,'theaterData' => $theaterData]);
     }
 
 
-    #[Route('/cancel', name: 'cancel_url')]
-    public function cancelUrl(): Response
+    #[Route('/cancel/{id}', name: 'cancel_url')]
+    public function cancelUrl($id,TheatreRepository $theatreRepository): Response
     {
+
+        $theatre=$theatreRepository->findByBRId($id);
+        $theatreNom=$theatre->getNom();
+        $theatreId=$theatre->getId();
+
         $httpClient = HttpClient::create();
         $responseData = $httpClient->request('POST', 'https://api.billetreduc.com/api/auth/login', [
             'headers' => [
@@ -185,7 +210,7 @@ class PaymentController extends AbstractController
         ]);
       
 
-        $responseTheatre = $httpClient->request('GET', 'https://api.billetreduc.com/api/export/GetNextSessionFromTheater/122', [
+        $responseTheatre = $httpClient->request('GET', 'https://api.billetreduc.com/api/export/GetNextSessionFromTheater/' . $id, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
             ],
@@ -199,6 +224,6 @@ class PaymentController extends AbstractController
  
  
     
-        return $this->render('payment/cancel.html.twig', ['theatersData' => $theatersData,'theaterData' => $theaterData]);
+        return $this->render('payment/cancel.html.twig', ['theatreId'=>$theatreId,'id'=>$id,'theatersData' => $theatersData,'theaterData' => $theaterData]);
     }
 }

@@ -39,6 +39,25 @@ class TheatreRepository extends ServiceEntityRepository
         }
     }
 
+    
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('o')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult(); 
+    }
+
+    public function findByBRId($BRId)
+    {
+        return $this->createQueryBuilder('o')
+            ->where('o.BRId = :BRId')
+            ->setParameter('BRId', $BRId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+        
 //    /**
 //     * @return Theatre[] Returns an array of Theatre objects
 //     */

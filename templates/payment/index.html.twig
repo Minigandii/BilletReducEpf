@@ -8,7 +8,7 @@
 
 
     <p class="fs-2 mt-3 text-dark">Je donne un pourboire pour :</p>
-    <p class="fs-4 text-dark">Les ouvreurs du <br> Théâtre de la Ville</p>
+    <p class="fs-4 text-dark">Les ouvreurs du <br> {{ theatreNom }}</p>
 
     <form class ="text-center" id="payment-form" method="POST">
 
@@ -21,6 +21,7 @@
             <span class="input-group-text" id="addon-wrapping">€</span>
             <input type="number" id="tip_amount" name="tip_amount" class="form-control border-dark" placeholder="Montant du pourboire" aria-label="Montant du pourboire" aria-describedby="addon-wrapping" step="0.5" min="0" required>
         </div>
+        <input type="hidden" name="id" value="{{ id }}" />
         <div class="d-grid gap-2 col-6 mx-auto">
             <button class="btn bleu-soir-50" type="submit" id="pay-cb">Payer par CB</button>
             <button class="btn bleu-soir-50" type="submit" id="pay-lydia">Payer par Lydia</button>
