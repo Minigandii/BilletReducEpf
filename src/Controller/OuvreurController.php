@@ -133,6 +133,8 @@ class OuvreurController extends AbstractController
     {
         $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
         $ouvreurToDelete = $ouvreurRepository->find($id);
+        $theatre=$ouvreurToDelete->getTheatre();
+
 
         if (!$ouvreurToDelete) {
             // Gérer le cas où le théâtre n'est pas trouvé, par exemple, rediriger avec un message d'erreur.
@@ -143,6 +145,12 @@ class OuvreurController extends AbstractController
 
         // Rediriger vers une page, peut-être la liste des théâtres
         return $this->redirectToRoute('app_theatre');
+
+        return $this->render('/theatre/comfirm_delete_ouvreur.html.twig', [
+            'ouvreur' => $ouvreurToDelete,
+            'theatre'=>$theatre
+        ]);
+        
     }
 
     #[Route("/theatre/confirm_delete_ouvreur/{id}", name: 'app_confirm_delete_ouvreur')]
@@ -151,6 +159,7 @@ class OuvreurController extends AbstractController
     {
         $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
         $ouvreurToDelete = $ouvreurRepository->find($id);
+        $theatre=$ouvreurToDelete->getTheatre();
 
         if (!$ouvreurToDelete) {
             return $this->redirectToRoute('app_theatre');
@@ -158,6 +167,7 @@ class OuvreurController extends AbstractController
 
         return $this->render('/theatre/comfirm_delete_ouvreur.html.twig', [
             'ouvreur' => $ouvreurToDelete,
+            'theatre'=>$theatre
         ]);
     }
 
