@@ -80,7 +80,7 @@ class OuvreurController extends AbstractController
             return $this->redirectToRoute('app_ouvreur');
         }
 
-        return $this->render('theatre/editOuvreur.html.twig', [
+        return $this->render('ouvreur/editOuvreur.html.twig', [
             'editOuvreurForm' => $editOuvreurForm->createView(),
             'ouvreur' => $ouvreur,
             'theatre'=> $theatre
