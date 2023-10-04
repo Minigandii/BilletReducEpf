@@ -1,0 +1,45 @@
+{% extends 'baseViewOuvreur.html.twig' %}
+
+{% block title %}Modifier Ouvreur{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+
+<div class="example-wrapper">
+    <p class="fs-3 mt-3 text-white">Modifier le compte :</p>
+
+
+    {{ form_start(editOuvreurForm) }}
+        <div class="form-floating mb-2">
+            {{ form_widget(editOuvreurForm.email, {'attr': {'class': 'form-control','placeholder': 'Email'}}) }}
+            {{ form_label(editOuvreurForm.email) }}
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(editOuvreurForm.nom, {'attr': {'class': 'form-control','placeholder': 'Nom'}}) }}
+            {{ form_label(editOuvreurForm.nom) }}
+
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(editOuvreurForm.prenom, {'attr': {'class': 'form-control','placeholder': 'Prénom'}}) }}
+            {{ form_label(editOuvreurForm.prenom) }}
+
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(editOuvreurForm.telephone, {'attr': {'class': 'form-control','placeholder': 'Telephone'}}) }}
+            {{ form_label(editOuvreurForm.telephone) }}
+        </div>
+
+        <div class="form-floating mb-2">
+            {{ form_widget(editOuvreurForm.password, {'attr': {'class': 'form-control','placeholder': 'Mot de passe'}}) }}
+            {{ form_label(editOuvreurForm.password) }}
+        </div>
+
+        <button type="submit" class="btn btn-dark">Valider</button>
+    {{ form_end(editOuvreurForm) }}
+
+</div>
+{% endblock %}
