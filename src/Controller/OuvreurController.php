@@ -106,12 +106,19 @@ class OuvreurController extends AbstractController
             );
             $entityManager->persist($ouvreur);
             $entityManager->flush();
+            
+            
+
+    
 
             return $this->redirectToRoute('app_theatre');
         }
 
         return $this->render('theatre/addOuvreur.html.twig', [
             'addOuvreurform' => $addOuvreurform->createView(),
+          
+           
+            
            
         ]);
     }
