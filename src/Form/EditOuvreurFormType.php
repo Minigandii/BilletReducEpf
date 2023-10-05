@@ -28,12 +28,6 @@ class EditOuvreurFormType extends AbstractType
                         'message' => 'Le numéro de téléphone n\'est pas valide.',
                     ]),
                 ],
-            ])
-            ->add('theatre', EntityType::class, [
-                'class' => Theatre::class,
-                'choice_label' => 'nom',
-                'label' => 'Theatre associé',
-                'required' => true,
             ]);
         ;
     }
