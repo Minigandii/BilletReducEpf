@@ -147,13 +147,24 @@ class OuvreurController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/viewouvreur/{id}', name: 'app_view_ouvreur_admin')]
+    public function viewadmin(Ouvreur $ouvreur): Response
+    {
+
+        $theatre = $ouvreur->getTheatre();
+
+        return $this->render('ouvreur/viewouvreuradmin.html.twig', [
+            'ouvreur' => $ouvreur,
+            'theatre' => $theatre
+        ]);
+    }
+
     #[Route('/theatre/deleteOuvreur/{id}', name: 'app_delete_ouvreur')]
-    public function deleteTheatre($id, EntityManagerInterface $entityManager): Response
+    public function deleteOuvreur($id, EntityManagerInterface $entityManager): Response
     {
         $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
         $ouvreurToDelete = $ouvreurRepository->find($id);
         $theatre=$ouvreurToDelete->getTheatre();
-
 
         if (!$ouvreurToDelete) {
             // Gérer le cas où le théâtre n'est pas trouvé, par exemple, rediriger avec un message d'erreur.
@@ -172,6 +183,28 @@ class OuvreurController extends AbstractController
         
     }
 
+    #[Route('/admin/deleteOuvreur/{id}', name: 'app_delete_ouvreur_admin')]
+    public function deleteOuvreurAdmin($id, EntityManagerInterface $entityManager): Response
+    {
+        $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
+        $ouvreurToDelete = $ouvreurRepository->find($id);
+        $theatre=$ouvreurToDelete->getTheatre();
+
+        if (!$ouvreurToDelete) {
+            // Gérer le cas où le théâtre n'est pas trouvé, par exemple, rediriger avec un message d'erreur.
+        }
+
+        $entityManager->remove($ouvreurToDelete);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin');
+
+        return $this->render('/admin/comfirm_delete_ouvreur.html.twig', [
+            'ouvreur' => $ouvreurToDelete,
+            'theatre'=>$theatre
+        ]);
+    }
+
     #[Route("/theatre/confirm_delete_ouvreur/{id}", name: 'app_confirm_delete_ouvreur')]
 
     public function confirmDeleteOuvreur($id, EntityManagerInterface $entityManager, Request $request): Response
@@ -185,6 +218,24 @@ class OuvreurController extends AbstractController
         }
 
         return $this->render('/theatre/comfirm_delete_ouvreur.html.twig', [
+            'ouvreur' => $ouvreurToDelete,
+            'theatre'=>$theatre
+        ]);
+    }
+
+    #[Route("/admin/confirm_delete_ouvreur/{id}", name: 'app_confirm_delete_ouvreur_admin')]
+
+    public function confirmDeleteOuvreurAdmin($id, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $ouvreurRepository = $entityManager->getRepository(Ouvreur::class);
+        $ouvreurToDelete = $ouvreurRepository->find($id);
+        $theatre=$ouvreurToDelete->getTheatre();
+
+        if (!$ouvreurToDelete) {
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('/admin/comfirm_delete_ouvreur.html.twig', [
             'ouvreur' => $ouvreurToDelete,
             'theatre'=>$theatre
         ]);

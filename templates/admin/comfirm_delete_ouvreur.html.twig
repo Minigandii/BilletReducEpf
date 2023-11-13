@@ -13,7 +13,7 @@
     <div class="container">
     <p class="fs-3 mt-3 text-white">Confirmation de suppression :</p>
         <p class="text-white">Voulez-vous vraiment supprimer cet ouvreur ?</p>
-        <form method="post" action="{{ path('app_delete_ouvreur', {'id': ouvreur.id}) }}">
+        <form method="post" action="{{ path('app_delete_ouvreur_admin', {'id': ouvreur.id}) }}">
             <button type="submit" class="btn bg-dark btn-danger">Supprimer</button>
             <a onclick="goBack()" class="btn btn-secondary">Annuler</a>
         </form>

@@ -67,18 +67,12 @@
     {% block body %}
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <button onclick="goBack()" class="btn btn-link">
-                    <i class="fas fa-circle-arrow-left text-white fa-2x"></i>
-                </button>
-                
+            <button onclick="goBack()" class="btn btn-link">
+                <i class="fas fa-circle-arrow-left text-white fa-2x"></i>
+            </button>
                 <span class="navbar-text mx-auto text-truncate flex-grow-1" style="max-width: 50%">{{ theatre.nom }}</span>
-
-                <a href="/admin/viewQr/{{ theatre.id }}" class="btn btn-link">
-                    <i class="fas fa-qrcode text-white fa-2x"></i>
-                </a>
             </div>
         </nav>
-
     {% endblock %}
 </main>
 </body>

@@ -22,13 +22,9 @@
     <div class="row">
         <div class="d-flex justify-content-center">
 
-           <a href="/theatre/editOuvreur/{{ ouvreur.id }}" class="text-white text-center d-block mx-2">
-                <i class="fas fa-square-pen fa-2x"></i>
-            </a>
-             <a href="{{ path('app_confirm_delete_ouvreur', {'id': ouvreur.id}) }}" class="text-white text-center d-block mx-2">
+             <a href="{{ path('app_confirm_delete_ouvreur_admin', {'id': ouvreur.id}) }}" class="text-white text-center d-block mx-2">
                 <i class="fas fa-trash fa-2x"></i>
             </a>
-
         </div>
 
     </div>
