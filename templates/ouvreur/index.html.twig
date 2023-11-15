@@ -19,11 +19,36 @@
                 </div>
             
             </div>
-            <p class="text-white p-0 m-0 f-2">{{theatre.nom}} <br> <span class="text-dark">{{theatre.adresse}}</span> </p>
-
+            <p class="text-white nomtheatre p-0 m-0 f-2">{{theatre.nom}} <br> <span class="text-dark">{{theatre.adresse}}</span> </p>
+            <br />
+            <a id="downloadLink" download="qrcode.png">
+                <button type="button" id="downloadButton" class="btn btn-light btn-outline-dark">Télécharger QR Code</button>
+            </a>
             
         </div>
     </div>
 
 </div>
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function () {
+        var cardBody = document.querySelector('.card-body.text-center'); // Cible la balise <div> avec la classe "card-body text-center"
+        var qrCodeImage = cardBody.querySelector('img'); // Cible l'élément <img> à l'intérieur de la balise <div>
+
+        var downloadLink = document.getElementById('downloadLink');
+        var theatreNameElement = document.querySelector('.nomtheatre');
+        var content = theatreNameElement.textContent.trim();
+        var contentArray = content.split('\n');
+        var theatreName = contentArray[0]; 
+        var cleanedTheatreName = theatreName.replace(/[^a-zA-Z0-9]+/g, '-');
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        //var qrCodeImage = document.querySelector('public/QrCode/' + cleanedTheatreName + '.png');
+        canvas.width = qrCodeImage.width;
+        canvas.height = qrCodeImage.height;
+        context.drawImage(qrCodeImage, 0, 0, canvas.width, canvas.height);
+        var dataURL = canvas.toDataURL('image/png');
+        downloadLink.href = dataURL;
+        downloadLink.download = cleanedTheatreName + '.png'; 
+    });
+</script>
 {% endblock %}
