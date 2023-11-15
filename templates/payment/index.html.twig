@@ -7,8 +7,8 @@
 
 
 
-    <p class="fs-2 mt-3 text-dark">Je donne un pourboire pour :</p>
-    <p class="fs-4 text-dark">Les ouvreurs du <br> {{ theatreNom }}</p>
+    <p class="fs-2 mt-3 text-dark">Je donne un pourboire pour : 😀</p>
+    <p class="fs-4 text-dark">Les ouvreurs et ouvreuses du <br> {{ theatreNom }}</p>
 
     <form class ="text-center" id="payment-form" method="POST">
 
@@ -19,7 +19,7 @@
         </div>
         <div class="input-group flex-nowrap mb-3">
             <span class="input-group-text" id="addon-wrapping">€</span>
-            <input type="number" id="tip_amount" name="tip_amount" class="form-control border-dark" placeholder="Montant du pourboire" aria-label="Montant du pourboire" aria-describedby="addon-wrapping" step="0.5" min="0" required>
+            <input type="number" id="tip_amount" name="tip_amount" class="form-control border-dark" placeholder="Je donne un autre montant" aria-label="Je donne un autre montant" aria-describedby="addon-wrapping" step="0.5" min="0" required>
         </div>
         <input type="hidden" name="id" value="{{ id }}" />
         <div class="d-grid gap-2 col-6 mx-auto">

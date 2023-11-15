@@ -28,6 +28,10 @@
                 
             }
 
+            .padding-title{
+                padding-right:50px;
+            }
+
             .navbar{
                 background-color: #FF4130 !important;
             }
@@ -67,13 +71,14 @@
     {% block body %}
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-            <button onclick="goBack()" class="btn btn-link">
+            <button onclick="goBack()" class="btn btn-link" style="width:50px">
                 <i class="fas fa-circle-arrow-left text-white fa-2x"></i>
             </button>
-                <span class="navbar-text mx-auto text-truncate flex-grow-1" style="max-width: 50%">{{ theatre.nom }}</span>
+                <span class="padding-title navbar-text mx-auto text-truncate flex-grow-1" style="max-width: 50%">{{ theatre.nom }}</span>
             </div>
         </nav>
     {% endblock %}
 </main>
 </body>
 </html>
+

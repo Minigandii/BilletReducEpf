@@ -57,8 +57,11 @@
                 background-color: #fff;
                 padding: 20px;
                 border: 1px solid #ccc;
+                width:70%;
                 text-align: center; /* Centrer le contenu */
             }
+
+
 
             @media (min-width: 768px) {
                 .bd-placeholder-img-lg {
@@ -138,12 +141,21 @@
         </nav>
 
         <!-- Fenêtre modale d'aide -->
-        <div id="helpModal" class="modal">
-            <div class="modal-content">
-                <p>Veuillez appeler le 0606060606 pour obtenir de l'aide.</p>
-                <button onclick="closeHelpModal()">Fermer</button>
-            </div>
-        </div>
+
+
+<div id="helpModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Vous avez besoin d'aide ?</h5>
+      </div>
+      <div class="modal-body">
+        <p>Contactez Lucie Ayzac au 06 45 74 03 36</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-outline-dark" onclick="closeHelpModal()" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+</div>
     
 
     {% endblock %}

@@ -10,7 +10,7 @@
 {{ parent() }}
 
 <div class="example-wrapper">
-    <div class="container">
+    <div class="container mt-5">
     <p class="fs-3 mt-3 text-white">Confirmation de suppression :</p>
         <p class="text-white">Voulez-vous vraiment supprimer ce théâtre ?</p>
         <form method="post" action="{{ path('app_delete_theatre', {'id': theatre.id}) }}">
