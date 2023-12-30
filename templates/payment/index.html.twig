@@ -7,8 +7,9 @@
 
 
 
-    <p class="fs-2 mt-3 text-dark">Je donne un pourboire pour : 😀</p>
-    <p class="fs-4 text-dark">Les ouvreurs et ouvreuses du <br> {{ theatreNom }}</p>
+    <p class="fs-2 mt-3 titre ">Je donne un pourboire pour :</p>
+    <p class="fs-4 text-dark ">Les ouvreurs et ouvreuses du</p>
+    <p class="fs-4 bg-theatre mb-4"> {{ theatreNom }}</p>
 
     <form class ="text-center" id="payment-form" method="POST">
 
@@ -17,15 +18,16 @@
             <button type="button" class="btn btn-light btn-outline-dark" id="montant-2">2€</button>
             <button type="button" class="btn btn-light btn-outline-dark" id="montant-3">3€</button>
         </div>
-        <div class="input-group flex-nowrap mb-3">
+        <div class="input-group flex-nowrap mb-4">
             <span class="input-group-text" id="addon-wrapping">€</span>
             <input type="number" id="tip_amount" name="tip_amount" class="form-control border-dark" placeholder="Je donne un autre montant" aria-label="Je donne un autre montant" aria-describedby="addon-wrapping" step="0.5" min="0" required>
         </div>
         <input type="hidden" name="id" value="{{ id }}" />
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn bleu-soir-50" type="submit" id="pay-cb">Payer par CB</button>
-            <button class="btn bleu-soir-50" type="submit" id="pay-lydia">Payer par Lydia</button>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-dark mx-1" type="submit" id="pay-cb">Payer par CB</button>
+            <button class="btn btn-dark mx-1" type="submit" id="pay-lydia">Payer par Lydia</button>
         </div>
+
     </form>
 
     <script>

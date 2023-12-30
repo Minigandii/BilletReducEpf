@@ -20,9 +20,14 @@
             /* Show it is fixed to the top */
             body {
                 padding-top: 4.5rem;
-                //background-color: #FF4130 !important;   
+                background-color: #FFD6F5 !important;   
                 text-align:center;
                 font-family:'OldschoolGrotesk_W', sans-serif;
+            }
+
+            .titre{
+                color:#FF4130;
+                font-family: 'OldschoolGrotesk_W_B';
             }
 
             .bleu-soir {
@@ -51,6 +56,15 @@
                 user-select: none;
             }
 
+            .bg-theatre {
+                background-color:#FF4130;
+                border-radius:0.25rem;
+                margin-left:30%;
+                margin-right:30%;
+                padding:7px;
+                color:white;
+        }
+
             @media (min-width: 768px) {
                 .bd-placeholder-img-lg {
                     font-size: 3.5rem;
@@ -58,7 +72,13 @@
             }
             @font-face {
                 font-family: 'OldschoolGrotesk_W';
-                src: url('/font/WOFF2/OldschoolGrotesk_W-Regular.woff2') format('woff2');
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Regular.woff2') format('woff2');         
+                /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
+            }
+
+            @font-face {
+                font-family: 'OldschoolGrotesk_W_B';
+                src: url('/font/WOFF2/OldschoolGrotesk_W-Bold.woff2') format('woff2');         
                 /* Vous pouvez spécifier d'autres styles et variantes ici si nécessaire */
             }
             
@@ -78,7 +98,7 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="https://www.billetreduc.com/">
-                    <img src="{{ asset('images/BR-principal-blanc.png') }}" width="150" alt="Logo">
+                    <img src="{{ asset('images/tip-blanc.png') }}" width="100" alt="Logo">
                 </a>                 
              
             </div>
